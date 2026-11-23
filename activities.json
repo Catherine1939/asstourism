@@ -1,0 +1,22 @@
+[
+  { "id":"pony", "name":"Pony Trekking", "icon":"bi-horse", "difficulty":"Moderate", "duration":"2 hrs – 5 days", "season":"Year-round", "price":450,
+    "desc":"Explore the mountains Basotho-style on the sure-footed Basotho pony. Treks range from short village rides to multi-day expeditions." },
+  { "id":"hiking", "name":"Hiking & Trekking", "icon":"bi-geo-alt", "difficulty":"Hard", "duration":"1–7 days", "season":"Sep–May", "price":300,
+    "desc":"From gentle foothill walks to a Thabana Ntlenyana summit — Lesotho's trails are endless and uncrowded." },
+  { "id":"abseil", "name":"Abseiling — Maletsunyane", "icon":"bi-arrows-vertical", "difficulty":"Hard", "duration":"Half day", "season":"Year-round", "price":1200,
+    "desc":"Abseil 204 m down the Maletsunyane Falls — the world's longest commercial single-drop abseil." },
+  { "id":"ski", "name":"Skiing & Snowboarding", "icon":"bi-snow", "difficulty":"Moderate", "duration":"1–3 days", "season":"Jun–Aug", "price":900,
+    "desc":"Afriski Mountain Resort offers real snow sports in the heart of Southern Africa." },
+  { "id":"4x4", "name":"4x4 Sani Pass", "icon":"bi-truck", "difficulty":"Hard", "duration":"Full day", "season":"Oct–May", "price":1500,
+    "desc":"Drive the legendary Sani Pass to the highest pub in Africa — 4x4 essential." },
+  { "id":"bird", "name":"Birdwatching", "icon":"bi-binoculars", "difficulty":"Easy", "duration":"2–4 hrs", "season":"Year-round", "price":200,
+    "desc":"Spot the endangered Bearded Vulture and Cape Vulture soaring over the Maluti." },
+  { "id":"fish", "name":"Fly Fishing & Trout", "icon":"bi-water", "difficulty":"Easy", "duration":"Half day", "season":"Sep–May", "price":350,
+    "desc":"Cast for wild trout in the clear rivers of Tsehlanyane and the Bokong plateau." },
+  { "id":"village", "name":"Cultural Village Tour", "icon":"bi-people", "difficulty":"Easy", "duration":"2–3 hrs", "season":"Year-round", "price":250,
+    "desc":"Visit a traditional Basotho village: meet families, taste local food, hear oral history." },
+  { "id":"bike", "name":"Mountain Biking", "icon":"bi-bicycle", "difficulty":"Moderate", "duration":"Half–full day", "season":"Sep–May", "price":500,
+    "desc":"Ride high-altitude singletrack at Afriski or scenic district roads across the highlands." },
+  { "id":"stars", "name":"Stargazing", "icon":"bi-stars", "difficulty":"Easy", "duration":"2 hrs", "season":"Apr–Sep", "price":150,
+    "desc":"Lesotho's dark, high-altitude skies reveal the Milky Way like few places on Earth." }
+]

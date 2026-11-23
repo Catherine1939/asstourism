@@ -1,0 +1,894 @@
+/*
+  ==================================================================
+  Kingdom in the Sky — Lesotho Tourism
+  File: css/style.css
+  Purpose: Single external stylesheet for the whole site.
+  Author: [Student Name] — BSc IT, Web Design BIWD2110
+  Date: 2026-11
+  ------------------------------------------------------------------
+  Sections:
+   1. Variables (colours, spacing, radius, shadows) + dark mode
+   2. Reset & base (box-sizing: border-box explained)
+   3. Typography (Playfair Display headings, Inter body)
+   4. Layout helpers (container, sections, spacing)
+   5. Navbar (sticky, transparent->solid, underline animation)
+   6. Hero (full-screen, gradient overlay, search bar)
+   7. Buttons (primary, ghost, ripple/glow)
+   8. Cards (hover lift, image zoom)
+   9. Carousel & testimonials
+  10. Modal, accordion, alerts, badges, pagination, tabs
+  11. Forms (floating labels, validation states, password meter)
+  12. Tables (seasonal weather, price comparison, Sesotho phrases)
+  13. Gallery (CSS grid masonry, lightbox)
+  14. Timeline (about page)
+  15. Footer
+  16. Basotho geometric pattern divider (CSS gradients)
+  17. Scroll-reveal, counters, back-to-top, toasts
+  18. Utility & accessibility (skip link, focus, reduced motion)
+  19. Media queries (360px, 768px, 1366px, 1920px)
+  ==================================================================
+*/
+
+/* =================================================================
+   1. VARIABLES — change the whole theme from here
+   ================================================================= */
+:root {
+  /* Brand palette (Basotho blanket + national flag) */
+  --color-mountain-blue: #0B2A4A;   /* deep mountain blue */
+  --color-flag-blue:    #00209F;   /* Lesotho flag blue */
+  --color-highland:     #2E7D32;   /* highland green */
+  --color-ochre:        #C8872E;   /* warm earth / ochre */
+  --color-snow:         #FAFAF7;   /* snow white */
+  --color-charcoal:     #1E1E1E;   /* charcoal text */
+
+  /* Semantic tokens */
+  --bg:           var(--color-snow);
+  --bg-alt:       #F2F1EC;
+  --surface:      #FFFFFF;
+  --text:         var(--color-charcoal);
+  --text-muted:   #5A5F66;
+  --heading:      var(--color-mountain-blue);
+  --primary:      var(--color-flag-blue);
+  --primary-2:    var(--color-mountain-blue);
+  --accent:       var(--color-ochre);
+  --success:      var(--color-highland);
+  --warning:      #E0A82E;
+  --error:        #C0392B;
+  --border:       #E4E2DA;
+  --navbar-bg:    rgba(11, 42, 74, 0.25);
+  --navbar-bg-solid: rgba(11, 42, 74, 0.96);
+  --shadow-sm: 0 1px 2px rgba(11,42,74,.06);
+  --shadow:    0 6px 24px rgba(11,42,74,.10);
+  --shadow-lg: 0 18px 50px rgba(11,42,74,.18);
+
+  /* 8px spacing scale */
+  --space-1: 0.5rem;   /* 8px  */
+  --space-2: 1rem;     /* 16px */
+  --space-3: 1.5rem;   /* 24px */
+  --space-4: 2rem;     /* 32px */
+  --space-5: 3rem;     /* 48px */
+  --space-6: 4rem;     /* 64px */
+  --space-7: 6rem;     /* 96px */
+
+  /* Radius & shadows consistent everywhere */
+  --radius-sm: 6px;
+  --radius:    14px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+
+  /* Type scale (fluid with clamp) */
+  --fs-body:  1rem;
+  --fs-lead:  clamp(1.05rem, 1vw + 0.9rem, 1.25rem);
+  --fs-h6:    1.125rem;
+  --fs-h5:    1.25rem;
+  --fs-h4:    clamp(1.3rem, 1vw + 1rem, 1.6rem);
+  --fs-h3:    clamp(1.6rem, 1.6vw + 1rem, 2.1rem);
+  --fs-h2:    clamp(2rem, 2.6vw + 1rem, 3rem);
+  --fs-h1:    clamp(2.4rem, 4vw + 1rem, 4.2rem);
+  --fs-hero:  clamp(2.8rem, 6vw + 1rem, 6rem);
+
+  --font-head: "Playfair Display", Georgia, serif;
+  --font-body: "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+
+  --container: 1200px;
+  --transition: 0.3s cubic-bezier(.2,.7,.3,1);
+}
+
+/* Dark mode token set — overrides the variables above */
+:root[data-theme="dark"] {
+  --bg:           #0E1622;
+  --bg-alt:       #131E2E;
+  --surface:      #18243A;
+  --text:         #E8ECF2;
+  --text-muted:   #9AA4B2;
+  --heading:      #F3D9A4;
+  --primary:      #4C7BFF;
+  --primary-2:    #0B2A4A;
+  --accent:       #E0A82E;
+  --success:      #4CAF6E;
+  --warning:      #E0A82E;
+  --error:        #E05A4E;
+  --border:       #26344C;
+  --navbar-bg:    rgba(14,22,34,0.30);
+  --navbar-bg-solid: rgba(14,22,34,0.97);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.4);
+  --shadow:    0 6px 24px rgba(0,0,0,.45);
+  --shadow-lg: 0 18px 50px rgba(0,0,0,.6);
+}
+
+/* =================================================================
+   2. RESET & BASE
+   box-sizing: border-box means width/height include padding + border,
+   so element sizing is predictable across the layout. Applied to every
+   element and pseudo-element below.
+   ================================================================= */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+* { margin: 0; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.6;            /* 160% readable body */
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  transition: background var(--transition), color var(--transition);
+}
+
+img { max-width: 100%; display: block; height: auto; }
+
+a { color: var(--primary); text-decoration: none; transition: color var(--transition); }
+a:hover { color: var(--accent); }
+
+ul, ol { padding-left: 1.2rem; }
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: var(--bg-alt); }
+::-webkit-scrollbar-thumb {
+  background: var(--color-mountain-blue);
+  border-radius: var(--radius-pill);
+  border: 3px solid var(--bg-alt);
+}
+:root[data-theme="dark"] ::-webkit-scrollbar-thumb { background: var(--primary); }
+
+/* Custom text selection */
+::selection { background: var(--accent); color: #fff; }
+
+/* =================================================================
+   3. TYPOGRAPHY
+   ================================================================= */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-head);
+  color: var(--heading);
+  line-height: 1.2;             /* 120% headings */
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+h1 { font-size: var(--fs-h1); }
+h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); }
+h4 { font-size: var(--fs-h4); }
+h5 { font-size: var(--fs-h5); }
+h6 { font-size: var(--fs-h6); }
+p  { margin-bottom: var(--space-2); }
+.lead { font-size: var(--fs-lead); color: var(--text-muted); }
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent);
+  font-family: var(--font-body);
+}
+
+/* =================================================================
+   4. LAYOUT HELPERS
+   ================================================================= */
+.section { padding: var(--space-6) 0; }
+.section--tight { padding: var(--space-5) 0; }
+.section--alt { background: var(--bg-alt); }
+.container-x { max-width: var(--container); margin-inline: auto; padding-inline: var(--space-2); }
+.section-head { max-width: 760px; margin: 0 auto var(--space-5); text-align: center; }
+.section-head .lead { margin-top: var(--space-1); }
+
+/* =================================================================
+   5. NAVBAR — heavily customised, not default Bootstrap look
+   ================================================================= */
+.navbar.kingdom-nav {
+  background: var(--navbar-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: background var(--transition), box-shadow var(--transition), padding var(--transition);
+  padding: var(--space-2) 0;
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+}
+.navbar.kingdom-nav.scrolled {
+  background: var(--navbar-bg-solid);
+  box-shadow: var(--shadow);
+  padding: 0.55rem 0;
+}
+.navbar.kingdom-nav .navbar-brand {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 1.35rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.navbar.kingdom-nav .navbar-brand .brand-mark {
+  width: 34px; height: 34px;
+  display: grid; place-items: center;
+  background: linear-gradient(135deg, var(--color-flag-blue), var(--color-mountain-blue));
+  border-radius: 50%;
+  color: var(--accent);
+}
+.navbar.kingdom-nav .brand-tag { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); display:block; font-family: var(--font-body); font-weight:600; }
+
+/* Nav links with animated underline */
+.navbar.kingdom-nav .nav-link {
+  color: rgba(255,255,255,0.86) !important;
+  font-weight: 500;
+  position: relative;
+  padding: 0.4rem 0.2rem !important;
+  margin: 0 0.55rem;
+}
+.navbar.kingdom-nav .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 100%; height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition);
+}
+.navbar.kingdom-nav .nav-link:hover,
+.navbar.kingdom-nav .nav-link.active {
+  color: #fff !important;
+}
+.navbar.kingdom-nav .nav-link:hover::after,
+.navbar.kingdom-nav .nav-link.active::after { transform: scaleX(1); }
+
+.navbar.kingdom-nav .nav-actions { display: flex; align-items: center; gap: 0.6rem; }
+
+/* Favourites badge */
+.fav-badge { position: relative; }
+.fav-badge .fav-count {
+  position: absolute; top: -6px; right: -8px;
+  background: var(--error); color: #fff;
+  font-size: 0.65rem; font-weight: 700;
+  min-width: 18px; height: 18px; padding: 0 4px;
+  border-radius: var(--radius-pill);
+  display: none; align-items: center; justify-content: center;
+}
+.fav-badge .fav-count.show { display: flex; }
+
+/* Theme toggle button */
+.theme-toggle, .icon-btn {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  display: inline-grid; place-items: center;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+}
+.theme-toggle:hover, .icon-btn:hover { background: rgba(255,255,255,0.24); transform: translateY(-2px); }
+
+.navbar.kingdom-nav .navbar-toggler {
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 0.3rem 0.55rem;
+}
+.navbar.kingdom-nav .navbar-toggler:focus { box-shadow: 0 0 0 3px rgba(200,135,46,0.5); }
+.navbar.kingdom-nav .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(255,255,255,0.9)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* Feature icon circles (why-visit / activity preview) */
+.feature-icon {
+  width: 72px; height: 72px; margin-inline: auto;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-flag-blue), var(--color-mountain-blue));
+  color: var(--accent);
+  display: grid; place-items: center;
+  font-size: 1.8rem;
+  box-shadow: var(--shadow);
+}
+
+/* =================================================================
+   6. HERO
+   ================================================================= */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  background:
+    linear-gradient(180deg, rgba(11,42,74,0.55) 0%, rgba(11,42,74,0.35) 40%, rgba(11,42,74,0.85) 100%),
+    url("https://upload.wikimedia.org/wikipedia/commons/0/09/Lesotho%2C_Drakenberg_mountains_%2850182014816%29.jpg") center/cover no-repeat;
+}
+.hero::after { /* subtle Basotho pattern overlay */
+  content: "";
+  position: absolute; inset: 0;
+  background: var(--basotho-pattern, transparent);
+  opacity: 0.06;
+  pointer-events: none;
+}
+.hero-content { position: relative; z-index: 2; padding: var(--space-6) 0; }
+.hero h1 {
+  color: #fff;
+  font-size: var(--fs-hero);
+  text-shadow: 0 4px 30px rgba(0,0,0,0.4);
+  margin-bottom: var(--space-2);
+}
+.hero .tagline {
+  font-size: var(--fs-lead);
+  color: rgba(255,255,255,0.92);
+  max-width: 620px;
+  margin-bottom: var(--space-3);
+}
+.hero .hero-btns { display: flex; flex-wrap: wrap; gap: var(--space-1); margin-bottom: var(--space-3); }
+
+/* Quick search bar */
+.hero-search {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: var(--radius-pill);
+  padding: 0.4rem;
+  display: flex;
+  gap: 0.4rem;
+  max-width: 560px;
+}
+.hero-search input {
+  flex: 1;
+  background: transparent;
+  border: 0;
+  color: #fff;
+  padding: 0.6rem 1rem;
+  outline: none;
+}
+.hero-search input::placeholder { color: rgba(255,255,255,0.7); }
+
+/* Page banner (interior pages) */
+.page-banner {
+  position: relative;
+  color: #fff;
+  padding: clamp(3rem, 8vw, 6rem) 0;
+  background:
+    linear-gradient(120deg, rgba(11,42,74,0.8), rgba(0,32,159,0.55)),
+    url("https://upload.wikimedia.org/wikipedia/commons/f/f4/Panoramic_view_from_a_mountain_in_Lesotho.jpg") center/cover no-repeat;
+}
+.page-banner h1 { color: #fff; margin-bottom: 0.3rem; }
+.page-banner .lead { color: rgba(255,255,255,0.9); margin: 0; }
+
+/* Breadcrumb custom */
+.breadcrumb.kingdom-crumb {
+  background: transparent;
+  padding: 0;
+  margin-bottom: 0;
+  font-size: 0.9rem;
+}
+.breadcrumb.kingdom-crumb a { color: rgba(255,255,255,0.85); }
+.breadcrumb.kingdom-crumb .breadcrumb-item.active { color: var(--accent); }
+.breadcrumb.kingdom-crumb .breadcrumb-item + .breadcrumb-item::before { color: rgba(255,255,255,0.5); content: "/"; }
+
+/* =================================================================
+   7. BUTTONS
+   ================================================================= */
+.btn-kingdom {
+  background: linear-gradient(135deg, var(--color-flag-blue), var(--color-mountain-blue));
+  color: #fff;
+  border: 0;
+  border-radius: var(--radius-pill);
+  padding: 0.75rem 1.8rem;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--transition), box-shadow var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+.btn-kingdom:hover { color: #fff; transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,32,159,0.4); }
+.btn-kingdom::after { /* glow ripple */
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(circle at var(--rx,50%) var(--ry,50%), rgba(255,255,255,0.35), transparent 60%);
+  opacity: 0; transition: opacity .4s;
+}
+.btn-kingdom:hover::after { opacity: 1; }
+
+.btn-ghost {
+  background: transparent;
+  color: #fff;
+  border: 1.5px solid rgba(255,255,255,0.6);
+  border-radius: var(--radius-pill);
+  padding: 0.75rem 1.8rem;
+  font-weight: 600;
+  transition: background var(--transition), transform var(--transition);
+}
+.btn-ghost:hover { color: #fff; background: rgba(255,255,255,0.15); transform: translateY(-3px); }
+
+.btn-accent {
+  background: linear-gradient(135deg, var(--accent), #E0A82E);
+  color: #1E1E1E;
+  border: 0; border-radius: var(--radius-pill);
+  padding: 0.75rem 1.8rem; font-weight: 700;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.btn-accent:hover { color: #1E1E1E; transform: translateY(-3px); box-shadow: 0 8px 24px rgba(200,135,46,0.45); }
+
+.btn-outline-kingdom {
+  background: transparent;
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+  border-radius: var(--radius-pill);
+  padding: 0.6rem 1.4rem; font-weight: 600;
+  transition: background var(--transition), color var(--transition);
+}
+.btn-outline-kingdom:hover { background: var(--primary); color: #fff; }
+
+/* =================================================================
+   8. CARDS — hover lift + image zoom
+   ================================================================= */
+.kingdom-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition), box-shadow var(--transition);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.kingdom-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+.kingdom-card .card-media { position: relative; overflow: hidden; aspect-ratio: 4/3; }
+.kingdom-card .card-media img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.6s cubic-bezier(.2,.7,.3,1);
+}
+.kingdom-card:hover .card-media img { transform: scale(1.08); }
+.kingdom-card .card-body { padding: var(--space-2); display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
+.kingdom-card .card-title { font-size: var(--fs-h5); margin: 0; }
+.kingdom-card .card-text { color: var(--text-muted); font-size: 0.95rem; flex: 1; }
+.kingdom-card .card-foot { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+
+.category-badge {
+  position: absolute; top: 12px; left: 12px;
+  background: rgba(11,42,74,0.88);
+  color: #fff;
+  font-size: 0.72rem; font-weight: 600;
+  padding: 0.3rem 0.8rem;
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(4px);
+}
+.category-badge.accent { background: var(--accent); color: #1E1E1E; }
+.category-badge.green { background: var(--color-highland); color:#fff; }
+
+/* Favourite heart button on cards */
+.fav-btn {
+  position: absolute; top: 12px; right: 12px;
+  background: rgba(255,255,255,0.9);
+  border: 0; border-radius: 50%;
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  cursor: pointer;
+  color: var(--error);
+  transition: transform var(--transition);
+  z-index: 3;
+}
+.fav-btn:hover { transform: scale(1.15); }
+.fav-btn .bi-heart-fill { display: none; }
+.fav-btn.active .bi-heart { display: none; }
+.fav-btn.active .bi-heart-fill { display: inline-block; }
+
+/* Star rating */
+.stars { color: var(--accent); font-size: 0.9rem; letter-spacing: 1px; }
+.stars .empty { color: var(--border); }
+
+/* Amenity badges */
+.amenity-badge {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  background: var(--bg-alt);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-pill);
+}
+
+/* =================================================================
+   9. CAROUSEL & TESTIMONIALS
+   ================================================================= */
+.testimonial-carousel .carousel-inner { border-radius: var(--radius-lg); overflow: hidden; }
+.testimonial {
+  background: var(--surface);
+  padding: var(--space-4);
+  text-align: center;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+.testimonial blockquote {
+  font-family: var(--font-head);
+  font-size: var(--fs-h4);
+  font-style: italic;
+  color: var(--heading);
+  line-height: 1.4;
+}
+.testimonial .quote-author { margin-top: var(--space-2); color: var(--text-muted); }
+.testimonial .quote-author strong { color: var(--text); display: block; }
+.carousel-control-prev-icon, .carousel-control-next-icon {
+  background-color: var(--color-mountain-blue);
+  border-radius: 50%;
+  padding: 1.4rem;
+}
+
+/* =================================================================
+  10. MODAL, ACCORDION, ALERTS, BADGES, PAGINATION, TABS
+   ================================================================= */
+.modal-content.kingdom-modal {
+  border: 0; border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--text);
+}
+.modal-content.kingdom-modal .modal-header { border-bottom: 1px solid var(--border); }
+.modal-content.kingdom-modal .modal-title { font-family: var(--font-head); color: var(--heading); }
+.modal-content.kingdom-modal .btn-close { filter: invert(0.4); }
+:root[data-theme="dark"] .modal-content.kingdom-modal .btn-close { filter: invert(1); }
+
+.accordion.kingdom-accord .accordion-item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius) !important;
+  margin-bottom: var(--space-1);
+  overflow: hidden;
+  background: var(--surface);
+}
+.accordion.kingdom-accord .accordion-button {
+  font-weight: 600;
+  color: var(--heading);
+  background: var(--surface);
+}
+.accordion.kingdom-accord .accordion-button:not(.collapsed) {
+  background: var(--bg-alt);
+  color: var(--primary);
+  box-shadow: none;
+}
+.accordion.kingdom-accord .accordion-button:focus { box-shadow: 0 0 0 3px rgba(0,32,159,0.2); }
+.accordion.kingdom-accord .accordion-body { color: var(--text-muted); }
+
+.alert.kingdom-alert { border-radius: var(--radius); border: 0; }
+.alert.kingdom-alert.alert-warning { background: rgba(224,168,46,0.18); color: var(--text); border-left: 4px solid var(--warning); }
+.alert.kingdom-alert.alert-info { background: rgba(0,32,159,0.10); color: var(--text); border-left: 4px solid var(--primary); }
+
+.badge.kingdom-badge { font-weight: 600; padding: 0.4em 0.7em; border-radius: var(--radius-pill); }
+.badge.diff-easy   { background: var(--color-highland); color: #fff; }
+.badge.diff-mod    { background: var(--accent); color: #1E1E1E; }
+.badge.diff-hard   { background: var(--error); color: #fff; }
+
+.pagination.kingdom-page .page-link {
+  color: var(--primary);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  margin: 0 2px;
+  border-radius: var(--radius-sm) !important;
+}
+.pagination.kingdom-page .page-link:hover { background: var(--bg-alt); }
+.pagination.kingdom-page .page-item.active .page-link {
+  background: var(--primary); border-color: var(--primary); color: #fff;
+}
+.pagination.kingdom-page .page-item.disabled .page-link { color: var(--text-muted); }
+
+.nav-pills.kingdom-tabs .nav-link {
+  color: var(--text-muted);
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+}
+.nav-pills.kingdom-tabs .nav-link.active {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* Progress bar (loading / password strength) */
+.progress.kingdom-progress { height: 8px; border-radius: var(--radius-pill); background: var(--bg-alt); }
+.progress.kingdom-progress .progress-bar { background: var(--primary); }
+
+/* Toast */
+.kingdom-toast {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--success);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+}
+
+/* =================================================================
+  11. FORMS
+   ================================================================= */
+.form-control, .form-select {
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  padding: 0.7rem 0.9rem;
+}
+.form-control:focus, .form-select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0,32,159,0.18);
+  background: var(--surface);
+  color: var(--text);
+}
+.form-floating > label { color: var(--text-muted); }
+.form-control.is-valid, .form-select.is-valid { border-color: var(--success); }
+.form-control.is-invalid, .form-select.is-invalid { border-color: var(--error); }
+.invalid-feedback { color: var(--error); font-size: 0.85rem; }
+.valid-feedback { color: var(--success); font-size: 0.85rem; }
+.form-check-input:checked { background-color: var(--primary); border-color: var(--primary); }
+.form-range::-webkit-slider-thumb { background: var(--accent); }
+.form-range:focus { box-shadow: none; }
+
+/* Password strength meter colours */
+.pw-meter .bar { height: 6px; border-radius: 4px; transition: width .3s, background .3s; }
+.pw-weak   { background: var(--error); }
+.pw-medium { background: var(--warning); }
+.pw-strong { background: var(--success); }
+
+/* =================================================================
+  12. TABLES
+   ================================================================= */
+.table.kingdom-table {
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.table.kingdom-table thead th {
+  background: var(--color-mountain-blue);
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 600;
+  border: 0;
+}
+.table.kingdom-table tbody td { background: var(--surface); color: var(--text); vertical-align: middle; }
+.table.kingdom-table tbody tr:nth-child(even) td { background: var(--bg-alt); }
+.table.table-striped > tbody > tr:nth-of-type(odd) > * { background: var(--bg-alt); color: var(--text); }
+
+/* =================================================================
+  13. GALLERY (CSS grid masonry) + LIGHTBOX
+   ================================================================= */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-auto-rows: 200px;
+  gap: var(--space-1);
+}
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  grid-row: span 1;
+}
+.gallery-item.tall { grid-row: span 2; }
+.gallery-item img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.6s cubic-bezier(.2,.7,.3,1);
+}
+.gallery-item:hover img { transform: scale(1.1); }
+.gallery-item .caption {
+  position: absolute; inset: auto 0 0 0;
+  background: linear-gradient(transparent, rgba(11,42,74,0.85));
+  color: #fff;
+  padding: var(--space-2) var(--space-1) var(--space-1);
+  transform: translateY(100%);
+  transition: transform var(--transition);
+}
+.gallery-item:hover .caption { transform: translateY(0); }
+.gallery-item .caption small { color: rgba(255,255,255,0.8); }
+
+/* Lightbox */
+.lightbox {
+  position: fixed; inset: 0; z-index: 2000;
+  background: rgba(8,16,28,0.92);
+  display: none;
+  align-items: center; justify-content: center;
+  flex-direction: column;
+}
+.lightbox.open { display: flex; }
+.lightbox img { max-width: 90vw; max-height: 78vh; border-radius: var(--radius); box-shadow: var(--shadow-lg); }
+.lightbox .lb-caption { color: #fff; margin-top: var(--space-1); text-align: center; }
+.lightbox .lb-counter { color: rgba(255,255,255,0.7); font-size: 0.85rem; }
+.lightbox .lb-btn {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25);
+  color: #fff; width: 54px; height: 54px; border-radius: 50%;
+  display: grid; place-items: center; cursor: pointer; font-size: 1.4rem;
+  transition: background var(--transition);
+}
+.lightbox .lb-btn:hover { background: rgba(255,255,255,0.28); }
+.lightbox .lb-prev { left: 2vw; }
+.lightbox .lb-next { right: 2vw; }
+.lightbox .lb-close { top: 3vh; right: 3vw; transform: none; }
+
+/* =================================================================
+  14. TIMELINE (about page)
+   ================================================================= */
+.timeline { position: relative; padding-left: 2.5rem; }
+.timeline::before {
+  content: ""; position: absolute; left: 0.6rem; top: 0; bottom: 0;
+  width: 2px; background: linear-gradient(var(--primary), var(--accent));
+}
+.timeline-item { position: relative; margin-bottom: var(--space-3); }
+.timeline-item::before {
+  content: ""; position: absolute; left: -2.1rem; top: 0.25rem;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--accent); border: 3px solid var(--bg);
+}
+.timeline-item time { font-weight: 700; color: var(--primary); }
+
+/* =================================================================
+  15. FOOTER
+   ================================================================= */
+.kingdom-footer {
+  background: var(--color-mountain-blue);
+  color: rgba(255,255,255,0.8);
+  padding: var(--space-5) 0 var(--space-3);
+  margin-top: var(--space-5);
+}
+:root[data-theme="dark"] .kingdom-footer { background: #0A1320; }
+.kingdom-footer h5 { color: #fff; margin-bottom: var(--space-2); font-size: var(--fs-h6); }
+.kingdom-footer a { color: rgba(255,255,255,0.75); }
+.kingdom-footer a:hover { color: var(--accent); }
+.kingdom-footer .footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.15);
+  margin-top: var(--space-3); padding-top: var(--space-2);
+  font-size: 0.85rem;
+}
+.kingdom-footer .social-btn {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  display: inline-grid; place-items: center;
+  color: #fff; transition: background var(--transition);
+}
+.kingdom-footer .social-btn:hover { background: var(--accent); color: #1E1E1E; }
+
+/* =================================================================
+  16. BASOTHO GEOMETRIC PATTERN DIVIDER (CSS gradients only)
+   Inspired by Basotho blanket & mokorotlo hat repeating motifs.
+   ================================================================= */
+.basotho-divider {
+  height: 28px;
+  background:
+    repeating-linear-gradient(45deg, var(--accent) 0 8px, transparent 8px 16px),
+    repeating-linear-gradient(-45deg, var(--color-flag-blue) 0 8px, transparent 8px 16px),
+    var(--color-mountain-blue);
+  background-blend-mode: multiply;
+}
+:root { --basotho-pattern:
+  repeating-linear-gradient(45deg, rgba(200,135,46,0.5) 0 12px, transparent 12px 24px),
+  repeating-linear-gradient(-45deg, rgba(255,255,255,0.4) 0 12px, transparent 12px 24px);
+}
+
+/* =================================================================
+  17. SCROLL REVEAL, COUNTERS, BACK-TO-TOP
+   ================================================================= */
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+
+.stat-num {
+  font-family: var(--font-head);
+  font-size: clamp(2.2rem, 3vw + 1rem, 3.6rem);
+  color: var(--primary);
+  font-weight: 700;
+  line-height: 1;
+}
+.stat-label { color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; }
+
+.back-to-top {
+  position: fixed; bottom: 24px; right: 24px; z-index: 1050;
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--primary); color: #fff; border: 0;
+  display: grid; place-items: center; cursor: pointer;
+  box-shadow: var(--shadow-lg);
+  opacity: 0; visibility: hidden; transform: translateY(20px);
+  transition: opacity var(--transition), transform var(--transition), visibility var(--transition);
+}
+.back-to-top.show { opacity: 1; visibility: visible; transform: none; }
+.back-to-top:hover { background: var(--accent); color: #1E1E1E; }
+
+/* Loading spinner */
+.spinner-ring {
+  width: 48px; height: 48px;
+  border: 5px solid var(--bg-alt);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+  margin: var(--space-4) auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Skeleton card */
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-alt) 25%, var(--border) 37%, var(--bg-alt) 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: var(--radius);
+}
+@keyframes shimmer { to { background-position: -100% 0; } }
+
+/* =================================================================
+  18. UTILITY & ACCESSIBILITY
+   ================================================================= */
+.skip-link {
+  position: absolute; left: -999px; top: 0; z-index: 2000;
+  background: var(--accent); color: #1E1E1E;
+  padding: 0.6rem 1rem; border-radius: 0 0 var(--radius-sm) 0;
+  font-weight: 600;
+}
+.skip-link:focus { left: 0; }
+
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+.welcome-bar {
+  background: var(--accent);
+  color: #1E1E1E;
+  font-size: 0.9rem;
+  padding: 0.4rem 0;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* No-results empty state */
+.empty-state {
+  text-align: center; padding: var(--space-5);
+  color: var(--text-muted);
+}
+.empty-state .bi { font-size: 3rem; color: var(--border); }
+
+/* =================================================================
+  19. MEDIA QUERIES
+   Tested at 360px (phone), 768px (tablet), 1366px (laptop), 1920px+.
+   ================================================================= */
+@media (max-width: 360px) {
+  .hero .hero-btns .btn { flex: 1 1 100%; }
+  .gallery-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .section { padding: var(--space-5) 0; }
+  .navbar.kingdom-nav .navbar-collapse {
+    background: var(--navbar-bg-solid);
+    border-radius: var(--radius);
+    padding: var(--space-1);
+    margin-top: var(--space-1);
+  }
+  .hero { min-height: 88vh; }
+  .testimonial blockquote { font-size: var(--fs-h5); }
+}
+@media (min-width: 1920px) {
+  :root { --container: 1400px; }
+  body { font-size: 1.05rem; }
+}
+
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}
