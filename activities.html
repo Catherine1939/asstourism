@@ -1,0 +1,172 @@
+<!--
+  File: activities.html
+  Purpose: Activity cards with difficulty badges, a "Plan Your Trip" quiz,
+           seasonal timeline, and Bootstrap alerts for safety notices.
+  Author: [Student Name] — BSc IT, Web Design BIWD2110
+  Date: 2026-11
+-->
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Things to do in Lesotho — pony trekking, hiking, abseiling Maletsunyane Falls, skiing at Afriski, 4x4 Sani Pass and more.">
+  <meta name="theme-color" content="#0B2A4A">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%2300209F' d='M8 0l8 9H0z'/%3E%3C/svg%3E">
+  <title>Activities — Kingdom in the Sky</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="activities">
+
+  <main id="main">
+    <section class="page-banner" aria-labelledby="pageTitle">
+      <div class="container-x">
+        <p class="eyebrow text-white" style="color:var(--accent)">Things to do</p>
+        <h1 id="pageTitle">Activities</h1>
+        <p class="lead">Adventure, culture and wilderness — twelve months of the year.</p>
+        <nav aria-label="Breadcrumb">
+          <ol class="breadcrumb kingdom-crumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Activities</li>
+          </ol>
+        </nav>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container-x">
+        <!-- Safety alerts -->
+        <div class="alert kingdom-alert alert-warning d-flex align-items-center gap-2 reveal" role="alert">
+          <i class="bi bi-exclamation-triangle"></i>
+          <div><strong>Mountain safety:</strong> Weather can change fast at altitude. Always carry warm layers, water and a charged phone, and tell someone your route.</div>
+        </div>
+        <div class="alert kingdom-alert alert-info d-flex align-items-center gap-2 reveal" role="alert">
+          <i class="bi bi-info-circle"></i>
+          <div>Altitude in the highlands (2,000 m+) means you'll tire more easily — allow a day to acclimatise before strenuous hikes.</div>
+        </div>
+
+        <!-- Activity cards rendered from JSON -->
+        <div class="section-head reveal">
+          <p class="eyebrow">Pick your adventure</p>
+          <h2 id="actTitle">Ten ways to experience Lesotho</h2>
+        </div>
+        <!-- Breakpoints: col-12 col-sm-6 col-lg-4 col-xl-3 -->
+        <div class="row g-4" id="actGrid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- Plan Your Trip quiz -->
+    <section class="section section--alt" aria-labelledby="quizTitle">
+      <div class="container-x">
+        <div class="section-head reveal">
+          <p class="eyebrow">Interactive</p>
+          <h2 id="quizTitle">Plan Your Trip quiz</h2>
+          <p class="lead">Answer three quick questions and we'll suggest an activity.</p>
+        </div>
+        <div class="kingdom-card card-body reveal" style="max-width:680px;margin:0 auto;padding:2rem">
+          <form id="tripQuiz">
+            <div class="mb-3">
+              <label class="form-label fw-semibold" for="q1">1. How adventurous are you?</label>
+              <select class="form-select" id="q1" required>
+                <option value="">Choose…</option>
+                <option value="Easy">Easy — I like gentle walks</option>
+                <option value="Moderate">Moderate — some challenge is fun</option>
+                <option value="Hard">Hard — push me to my limits</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-semibold" for="q2">2. Which season will you visit?</label>
+              <select class="form-select" id="q2" required>
+                <option value="">Choose…</option>
+                <option value="Snow">Winter (Jun–Aug) — snow</option>
+                <option value="Warm">Summer (Dec–Feb) — warm</option>
+                <option value="Any">Any / not sure</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-semibold" for="q3">3. What sounds most like you?</label>
+              <select class="form-select" id="q3" required>
+                <option value="">Choose…</option>
+                <option value="Culture">Meeting local people</option>
+                <option value="Wildlife">Watching animals &amp; birds</option>
+                <option value="Adrenaline">Adrenaline &amp; speed</option>
+                <option value="Quiet">Quiet &amp; stargazing</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-kingdom w-100">Show my recommendation</button>
+          </form>
+          <div id="quizResult" class="mt-3" role="status" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seasonal timeline -->
+    <section class="section" aria-labelledby="seasonTitle">
+      <div class="container-x">
+        <div class="section-head reveal">
+          <p class="eyebrow">All year round</p>
+          <h2 id="seasonTitle">Seasonal timeline</h2>
+        </div>
+        <!-- Breakpoints: col-md-6 col-lg-3 -->
+        <div class="row g-4">
+          <article class="col-md-6 col-lg-3 reveal">
+            <div class="kingdom-card card-body h-100">
+              <h3 class="h5"><i class="bi bi-sun text-warning"></i> Summer</h3>
+              <p class="text-muted small mb-2">December – February</p>
+              <ul class="small">
+                <li>Pony trekking in green hills</li>
+                <li>Maletsunyane at full flow</li>
+                <li>Fly fishing for trout</li>
+              </ul>
+            </div>
+          </article>
+          <article class="col-md-6 col-lg-3 reveal">
+            <div class="kingdom-card card-body h-100">
+              <h3 class="h5"><i class="bi bi-tree" style="color:var(--color-highland)"></i> Autumn</h3>
+              <p class="text-muted small mb-2">March – May</p>
+              <ul class="small">
+                <li>Hiking with clear dry trails</li>
+                <li>Photography of golden grass</li>
+                <li>Cultural village tours</li>
+              </ul>
+            </div>
+          </article>
+          <article class="col-md-6 col-lg-3 reveal">
+            <div class="kingdom-card card-body h-100">
+              <h3 class="h5"><i class="bi bi-snow" style="color:#7FB3D5"></i> Winter</h3>
+              <p class="text-muted small mb-2">June – August</p>
+              <ul class="small">
+                <li>Skiing &amp; snowboarding at Afriski</li>
+                <li>Stargazing on crisp nights</li>
+                <li>4x4 Sani Pass (snow permitting)</li>
+              </ul>
+            </div>
+          </article>
+          <article class="col-md-6 col-lg-3 reveal">
+            <div class="kingdom-card card-body h-100">
+              <h3 class="h5"><i class="bi bi-flower2" style="color:var(--accent)"></i> Spring</h3>
+              <p class="text-muted small mb-2">September – November</p>
+              <ul class="small">
+                <li>Wildflowers on the plateau</li>
+                <li>Mountain biking season opens</li>
+                <li>Birdwatching as migrants return</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+  <script src="js/includes.js" defer></script>
+  <script src="js/data.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/activities.js" defer></script>
+</body>
+</html>

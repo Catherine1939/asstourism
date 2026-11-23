@@ -1,0 +1,329 @@
+<!--
+  File: contact.html
+  Purpose: Three forms (booking, contact, registration) in Bootstrap tabs,
+           embedded map, FAQ accordion. Booking has a live cost calculator.
+  Author: [Student Name] — BSc IT, Web Design BIWD2110
+  Date: 2026-11
+-->
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact Kingdom in the Sky — book a trip, send a message, or create a traveller account.">
+  <meta name="theme-color" content="#0B2A4A">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%2300209F' d='M8 0l8 9H0z'/%3E%3C/svg%3E">
+  <title>Contact &amp; Booking — Kingdom in the Sky</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="contact">
+
+  <main id="main">
+    <section class="page-banner" aria-labelledby="pageTitle">
+      <div class="container-x">
+        <p class="eyebrow text-white" style="color:var(--accent)">Get in touch</p>
+        <h1 id="pageTitle">Contact &amp; Booking</h1>
+        <p class="lead">Book a trip, ask a question, or create a traveller account.</p>
+        <nav aria-label="Breadcrumb">
+          <ol class="breadcrumb kingdom-crumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Contact</li>
+          </ol>
+        </nav>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container-x">
+        <!-- Tabs: Booking | Contact | Register -->
+        <ul class="nav nav-pills kingdom-tabs justify-content-center mb-4 reveal" role="tablist" id="formTabs">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#booking" type="button" role="tab" aria-selected="true"><i class="bi bi-calendar-check me-1"></i>Book a trip</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-toggle="pill" data-bs-target="#contact" type="button" role="tab" aria-selected="false"><i class="bi bi-envelope me-1"></i>Contact</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-toggle="pill" data-bs-target="#register" type="button" role="tab" aria-selected="false"><i class="bi bi-person-plus me-1"></i>Register</button>
+          </li>
+        </ul>
+
+        <div class="tab-content reveal">
+          <!-- ========== BOOKING FORM ========== -->
+          <div class="tab-pane fade show active" id="booking" role="tabpanel" aria-labelledby="booking-tab">
+            <div class="row g-4">
+              <div class="col-lg-7">
+                <form id="bookingForm" novalidate>
+                  <h2 class="h4 mb-3">Booking form</h2>
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="bookFullName" placeholder="Full name" required minlength="2">
+                        <label for="bookFullName">Full name</label>
+                        <div class="invalid-feedback">Please enter your full name.</div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="bookEmail" placeholder="Email" required>
+                        <label for="bookEmail">Email</label>
+                        <div class="invalid-feedback">Enter a valid email.</div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-floating mb-3">
+                        <input type="tel" class="form-control" id="bookPhone" placeholder="+266 5XXX XXXX" required>
+                        <label for="bookPhone">Phone</label>
+                        <div class="invalid-feedback">Use a Lesotho number e.g. +266 5XXX XXXX.</div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-floating mb-3">
+                        <select class="form-select" id="bookDestination" required>
+                          <option value="">Choose destination…</option>
+                          <option>Maletsunyane Falls</option>
+                          <option>Thaba-Bosiu</option>
+                          <option>Katse Dam</option>
+                          <option>Sani Pass</option>
+                          <option>Afriski Mountain Resort</option>
+                          <option>Tsehlanyane National Park</option>
+                          <option>Sehlabathebe National Park</option>
+                          <option>Malealea</option>
+                          <option>Ha Kome Cave Dwellings</option>
+                          <option>Morija Museum</option>
+                          <option>Liphofung Cave</option>
+                          <option>Thabana Ntlenyana</option>
+                          <option>Maseru</option>
+                        </select>
+                        <label for="bookDestination">Destination</label>
+                        <div class="invalid-feedback">Please choose a destination.</div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-floating mb-3">
+                        <select class="form-select" id="bookAccommodation" required>
+                          <option value="">Choose accommodation…</option>
+                          <option>Maliba Mountain Lodge (M 2800)</option>
+                          <option>Sani Mountain Lodge (M 2200)</option>
+                          <option>Malealea Lodge (M 1200)</option>
+                          <option>Afriski Resort (M 1900)</option>
+                          <option>Avani Maseru Hotel (M 1600)</option>
+                          <option>Semonkong Lodge (M 650)</option>
+                          <option>Roma Trading Post (M 850)</option>
+                          <option>Highland Camping (M 250)</option>
+                        </select>
+                        <label for="bookAccommodation">Accommodation</label>
+                        <div class="invalid-feedback">Please choose accommodation.</div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="accPrice" class="visually-hidden">Price per night (Maloti)</label>
+                      <input type="number" id="accPrice" value="1200" min="0" class="form-control mb-3" aria-describedby="accPriceHelp">
+                      <small id="accPriceHelp" class="text-muted">Price per night in Maloti (auto-filled from accommodation, edit if needed).</small>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-floating mb-3">
+                        <input type="date" class="form-control" id="checkinDate" required>
+                        <label for="checkinDate">Check-in</label>
+                        <div class="invalid-feedback">Select a valid date.</div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-floating mb-3">
+                        <input type="date" class="form-control" id="checkoutDate" required>
+                        <label for="checkoutDate">Check-out</label>
+                        <div class="invalid-feedback">Check-out must be after check-in.</div>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="rooms" value="1" min="1" max="10" required>
+                        <label for="rooms">Rooms</label>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="adults" value="2" min="1" max="20" required>
+                        <label for="adults">Adults</label>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="children" value="0" min="0" max="20">
+                        <label for="children">Children</label>
+                      </div>
+                    </div>
+                    <div class="col-md-10">
+                      <label class="form-label fw-semibold">Activities <span class="text-muted fw-normal">(adds to total)</span></label>
+                      <div class="d-flex flex-wrap gap-3">
+                        <div class="form-check"><input class="form-check-input" type="checkbox" name="activities" id="act-pony" data-cost="450"><label class="form-check-label" for="act-pony">Pony trekking (M 450)</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" name="activities" id="act-hike" data-cost="300"><label class="form-check-label" for="act-hike">Hiking (M 300)</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" name="activities" id="act-abseil" data-cost="1200"><label class="form-check-label" for="act-abseil">Abseiling (M 1200)</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" name="activities" id="act-4x4" data-cost="1500"><label class="form-check-label" for="act-4x4">4x4 Sani Pass (M 1500)</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" name="activities" id="act-stars" data-cost="150"><label class="form-check-label" for="act-stars">Stargazing (M 150)</label></div>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label fw-semibold">Extras <span class="text-muted fw-normal">(per guest)</span></label>
+                      <div class="d-flex flex-wrap gap-3">
+                        <div class="form-check"><input class="form-check-input" type="checkbox" data-extra="200" id="ex-transfer"><label class="form-check-label" for="ex-transfer">Airport transfer (M 200)</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" data-extra="500" id="ex-guide"><label class="form-check-label" for="ex-guide">Local guide (M 500)</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" data-extra="300" id="ex-meals"><label class="form-check-label" for="ex-meals">Full-board meals (M 300)</label></div>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <label for="specialRequests" class="form-label">Special requests</label>
+                      <textarea class="form-control" id="specialRequests" rows="3" placeholder="Dietary needs, accessibility, preferred guide…"></textarea>
+                    </div>
+                    <div class="col-md-4">
+                      <label for="currency" class="form-label">Currency</label>
+                      <select id="currency" class="form-select">
+                        <option value="M">Maloti (M)</option>
+                        <option value="USD">USD ($)</option>
+                      </select>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-kingdom mt-3"><i class="bi bi-send me-1"></i>Request booking</button>
+                </form>
+              </div>
+
+              <!-- Live cost breakdown -->
+              <aside class="col-lg-5">
+                <div class="kingdom-card card-body sticky-top" style="top:90px">
+                  <h3 class="h5">Live cost estimate</h3>
+                  <p class="text-muted small">Updates as you change dates, rooms and activities.</p>
+                  <div id="costBreakdown" aria-live="polite"></div>
+                </div>
+              </aside>
+            </div>
+          </div>
+
+          <!-- ========== CONTACT FORM ========== -->
+          <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+            <div class="row g-4">
+              <div class="col-lg-7">
+                <form id="contactForm" novalidate>
+                  <h2 class="h4 mb-3">Send us a message</h2>
+                  <div class="row g-3">
+                    <div class="col-md-6"><div class="form-floating mb-3"><input type="text" class="form-control" id="contactName" placeholder="Name" required><label for="contactName">Your name</label><div class="invalid-feedback">Please enter your name.</div></div></div>
+                    <div class="col-md-6"><div class="form-floating mb-3"><input type="email" class="form-control" id="contactEmail" placeholder="Email" required><label for="contactEmail">Email</label><div class="invalid-feedback">Enter a valid email.</div></div></div>
+                    <div class="col-12"><div class="form-floating mb-3"><input type="text" class="form-control" id="contactSubject" placeholder="Subject" required><label for="contactSubject">Subject</label><div class="invalid-feedback">Please add a subject.</div></div></div>
+                    <div class="col-12"><div class="mb-3"><label for="contactMessage" class="form-label">Message</label><textarea class="form-control" id="contactMessage" rows="5" required></textarea><div class="invalid-feedback">Please write a message.</div></div></div>
+                  </div>
+                  <button type="submit" class="btn btn-kingdom"><i class="bi bi-send me-1"></i>Send message</button>
+                </form>
+              </div>
+              <aside class="col-lg-5">
+                <h2 class="h5">Reach us</h2>
+                <address class="mb-3">
+                  <i class="bi bi-geo-alt"></i> Kingsway Rd, Maseru, Lesotho<br>
+                  <i class="bi bi-telephone"></i> <a href="tel:+26658000000">+266 5800 0000</a><br>
+                  <i class="bi bi-envelope"></i> <a href="mailto:hello@kingdominthesky.ls">hello@kingdominthesky.ls</a><br>
+                  <i class="bi bi-clock"></i> Mon–Fri 08:00–17:00, Sat 09:00–13:00
+                </address>
+                <iframe title="Map of Maseru, Lesotho" src="https://www.openstreetmap.org/export/embed.html?bbox=27.4%2C-29.35%2C27.55%2C-29.28&amp;layer=mapnik" width="100%" height="280" style="border:0;border-radius:14px" loading="lazy"></iframe>
+              </aside>
+            </div>
+          </div>
+
+          <!-- ========== REGISTRATION FORM ========== -->
+          <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
+            <div class="row justify-content-center">
+              <div class="col-lg-7">
+                <form id="registerForm" novalidate>
+                  <h2 class="h4 mb-3">Create a traveller account</h2>
+                  <p class="text-muted small">We'll greet you by name next time you visit.</p>
+                  <div class="row g-3">
+                    <div class="col-md-6"><div class="form-floating mb-3"><input type="text" class="form-control" id="regFullName" placeholder="Full name" required minlength="2"><label for="regFullName">Full name</label><div class="invalid-feedback">Please enter your name.</div></div></div>
+                    <div class="col-md-6"><div class="form-floating mb-3"><input type="email" class="form-control" id="regEmail" placeholder="Email" required><label for="regEmail">Email</label><div class="invalid-feedback">Enter a valid email.</div></div></div>
+                    <div class="col-md-6"><div class="form-floating mb-3"><input type="tel" class="form-control" id="regPhone" placeholder="+266 5XXX XXXX" required><label for="regPhone">Phone</label><div class="invalid-feedback">Use a Lesotho number.</div></div></div>
+                    <div class="col-md-6">
+                      <label class="form-label d-block">Gender</label>
+                      <div class="d-flex gap-3">
+                        <div class="form-check"><input class="form-check-input" type="radio" name="gender" id="gender-f" value="female" required><label class="form-check-label" for="gender-f">Female</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="gender" id="gender-m" value="male"><label class="form-check-label" for="gender-m">Male</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="gender" id="gender-o" value="other"><label class="form-check-label" for="gender-o">Other</label></div>
+                      </div>
+                    </div>
+                    <div class="col-md-6"><div class="form-floating mb-3"><select class="form-select" id="regCountry" required><option value="">Choose…</option><option>Lesotho</option><option>South Africa</option><option>Botswana</option><option>Namibia</option><option>United Kingdom</option><option>United States</option><option>Other</option></select><label for="regCountry">Country</label><div class="invalid-feedback">Please choose a country.</div></div></div>
+                    <div class="col-md-6">
+                      <label for="regPassword" class="form-label">Password</label>
+                      <input type="password" class="form-control" id="regPassword" required minlength="8" aria-describedby="pwLabel">
+                      <div class="progress kingdom-progress mt-2" id="pwMeter" style="height:6px"><div class="bar" style="width:0"></div></div>
+                      <small id="pwLabel" class="text-muted"></small>
+                      <div class="invalid-feedback">Password must be at least 8 characters.</div>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="regConfirm" class="form-label">Confirm password</label>
+                      <input type="password" class="form-control" id="regConfirm" data-match="regPassword" required>
+                      <div class="invalid-feedback">Passwords must match.</div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="agreeTerms" required>
+                        <label class="form-check-label" for="agreeTerms">I agree to the <a href="#">terms</a> and this is sample data for an assignment.</label>
+                        <div class="invalid-feedback">You must accept the terms.</div>
+                      </div>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-kingdom mt-3">Create account</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ accordion -->
+        <section class="mt-5" aria-labelledby="contactFaqTitle">
+          <h2 id="contactFaqTitle" class="text-center mb-3">Frequently asked questions</h2>
+          <div class="accordion kingdom-accord" id="contactFaq" style="max-width:760px;margin:0 auto">
+            <div class="accordion-item">
+              <h3 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#cfaq1">How quickly will I get a reply?</button></h3>
+              <div id="cfaq1" class="accordion-collapse collapse show" data-bs-parent="#contactFaq"><div class="accordion-body">Within 48 hours by email; sooner during weekday office hours.</div></div>
+            </div>
+            <div class="accordion-item">
+              <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cfaq2">Do you take real payments on this site?</button></h3>
+              <div id="cfaq2" class="accordion-collapse collapse" data-bs-parent="#contactFaq"><div class="accordion-body">No — this is a student assignment. The booking form generates a sample reference number only.</div></div>
+            </div>
+            <div class="accordion-item">
+              <h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cfaq3">Can I change or cancel a sample booking?</button></h3>
+              <div id="cfaq3" class="accordion-collapse collapse" data-bs-parent="#contactFaq"><div class="accordion-body">Use the "Clear my data" button in the footer to reset all saved information.</div></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <!-- Booking confirmation modal -->
+  <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content kingdom-modal text-center">
+        <div class="modal-header justify-content-center border-0 pb-0">
+          <h2 class="modal-title h4" id="confirmTitle"><i class="bi bi-check-circle text-success me-2"></i>Booking request received</h2>
+        </div>
+        <div class="modal-body">
+          <p>Thank you, <strong id="confName"></strong>. Your sample reference is:</p>
+          <p class="h3 text-primary" id="confRef"></p>
+          <div class="text-start mt-3" id="confSummary"></div>
+          <div class="d-flex gap-2 justify-content-center mt-3">
+            <button class="btn btn-outline-kingdom" id="printSummary"><i class="bi bi-printer me-1"></i>Print summary</button>
+            <button class="btn btn-kingdom" data-bs-dismiss="modal">Done</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+  <script src="js/includes.js" defer></script>
+  <script src="js/data.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/forms.js" defer></script>
+</body>
+</html>

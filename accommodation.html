@@ -1,0 +1,154 @@
+<!--
+  File: accommodation.html
+  Purpose: Browse accommodation with type + price filters, comparison
+           table, FAQ accordion, and "book now" hand-off to the booking form.
+  Author: [Student Name] — BSc IT, Web Design BIWD2110
+  Date: 2026-11
+-->
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Where to stay in Lesotho — lodges, hotels, guesthouses, backpackers and camping with live price filtering.">
+  <meta name="theme-color" content="#0B2A4A">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/200/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%2300209F' d='M8 0l8 9H0z'/%3E%3C/svg%3E">
+  <title>Where to Stay — Kingdom in the Sky</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="accommodation">
+
+  <main id="main">
+    <section class="page-banner" aria-labelledby="pageTitle">
+      <div class="container-x">
+        <p class="eyebrow text-white" style="color:var(--accent)">Stay</p>
+        <h1 id="pageTitle">Where to Stay</h1>
+        <p class="lead">From five-star lodges to highland camping — find your base in the mountains.</p>
+        <nav aria-label="Breadcrumb">
+          <ol class="breadcrumb kingdom-crumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Accommodation</li>
+          </ol>
+        </nav>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container-x">
+        <!-- Filters: type buttons + price range slider -->
+        <div class="row g-3 align-items-end mb-4 reveal">
+          <div class="col-lg-7">
+            <span class="eyebrow">Type</span>
+            <div id="typeBtns" class="d-flex flex-wrap gap-2 mt-1" role="group" aria-label="Accommodation type">
+              <button class="btn btn-kingdom btn-sm" data-type="All">All</button>
+              <button class="btn btn-outline-kingdom btn-sm" data-type="Lodge">Lodge</button>
+              <button class="btn btn-outline-kingdom btn-sm" data-type="Hotel">Hotel</button>
+              <button class="btn btn-outline-kingdom btn-sm" data-type="Guesthouse">Guesthouse</button>
+              <button class="btn btn-outline-kingdom btn-sm" data-type="Backpackers">Backpackers</button>
+              <button class="btn btn-outline-kingdom btn-sm" data-type="Camping">Camping</button>
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <span class="eyebrow d-block">Max price per night</span>
+            <label for="priceSlider" class="visually-hidden">Maximum price</label>
+            <input type="range" class="form-range" id="priceSlider" min="200" max="3000" step="50" value="3000">
+            <small id="priceLabel" class="text-muted">Up to M 3,000</small>
+          </div>
+        </div>
+
+        <!-- Accommodation grid: breakpoints col-12 col-sm-6 col-lg-4 col-xxl-3 -->
+        <div class="row g-4" id="accGrid" aria-live="polite"></div>
+
+        <p class="text-muted small mt-4"><i class="bi bi-info-circle"></i> All prices and listings are sample data prepared for this assignment.</p>
+      </div>
+    </section>
+
+    <!-- Comparison table -->
+    <section class="section section--alt" aria-labelledby="cmpTitle">
+      <div class="container-x">
+        <div class="section-head reveal">
+          <p class="eyebrow">Compare</p>
+          <h2 id="cmpTitle">Four lodges side by side</h2>
+        </div>
+        <div class="table-responsive reveal">
+          <table class="table kingdom-table text-center align-middle">
+            <caption class="text-start text-muted small">Sample comparison — prices per night in Maloti (M).</caption>
+            <thead>
+              <tr><th scope="col">Lodge</th><th scope="col">Location</th><th scope="col">Type</th><th scope="col">Rating</th><th scope="col">Price (M)</th><th scope="col">Best for</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Maliba Mountain Lodge</td><td>Tsehlanyane</td><td>Lodge</td><td>5.0</td><td data-price-m="2800">M 2800</td><td>Luxury &amp; nature</td></tr>
+              <tr><td>Sani Mountain Lodge</td><td>Sani Pass</td><td>Lodge</td><td>4.5</td><td data-price-m="2200">M 2200</td><td>4x4 adventurers</td></tr>
+              <tr><td>Malealea Lodge</td><td>Malealea</td><td>Lodge</td><td>4.0</td><td data-price-m="1200">M 1200</td><td>Pony trekking</td></tr>
+              <tr><td>Semonkong Lodge</td><td>Semonkong</td><td>Backpackers</td><td>4.0</td><td data-price-m="650">M 650</td><td>Budget &amp; falls</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ accordion -->
+    <section class="section" aria-labelledby="faqTitle">
+      <div class="container-x">
+        <div class="section-head reveal">
+          <p class="eyebrow">Good to know</p>
+          <h2 id="faqTitle">Accommodation tips &amp; FAQs</h2>
+        </div>
+        <div class="accordion kingdom-accord reveal" id="accFaq">
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                Do I need to book in advance?
+              </button>
+            </h3>
+            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#accFaq">
+              <div class="accordion-body">In peak season (Jun–Aug for snow, Dec–Jan holidays) yes — mountain lodges are small and fill quickly. Off-season you can often walk in.</div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                Is Wi-Fi available in the highlands?
+              </button>
+            </h3>
+            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#accFaq">
+              <div class="accordion-body">Most lodges offer Wi-Fi but it can be slow or limited. Buy a local Vodacom or Econet SIM in Maseru for the best coverage on the road.</div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                What payment methods do lodges accept?
+              </button>
+            </h3>
+            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#accFaq">
+              <div class="accordion-body">Cash (Maloti or Rand at 1:1) and card at larger lodges. Smaller places may be cash-only — carry enough for rural stays.</div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                Are lodges suitable for families with children?
+              </button>
+            </h3>
+            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#accFaq">
+              <div class="accordion-body">Yes — many offer family rooms and pony rides for kids. Take warm clothing; nights are cold even in summer above 2,000 m.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+  <script src="js/includes.js" defer></script>
+  <script src="js/data.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/accommodation.js" defer></script>
+</body>
+</html>
